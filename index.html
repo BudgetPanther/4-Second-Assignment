@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      #btn{
+        background-color: #53565A;
+        width: 600px;
+        height: 50px;
+        font-weight: bold;
+      }
+      table, th{
+        table-layout: fixed;
+        border-collapse: collapse;
+        border: 1px solid black;
+        text-align: center;
+        width: 600px;
+        
+      }
+      
+    </style>
+
+  </head>
+  <body>
+  <button id="btn" onclick="sw2()">START</button>
+  <div id="box" style=" width: 600px; height: 60px;"></div>
+    
+    <table id="leaderboard">
+      <tr>
+        <th>Start</th>
+        <th>End</th>
+        <th>Attempt</th>
+      </tr>
+    </table>
+</body>
+<script>
+  startPoint = [];
+  endPoint = [];
+  i = 0;
+
+
+  function buildTabl(){
+    var table = document.getElementById("leaderboard");
+    var row = table.insertRow(0);
+    var cel1 = row.insertCell(0);
+    var cel2 = row.insertCell(1);
+    var cel3 = row.insertCell(2)
+    cel1.innerHTML = String(startPoint[i]).charAt(8)+String(startPoint[i]).charAt(9)+String(startPoint[i]).charAt(10)+String(startPoint[i]).charAt(11)+String(startPoint[i]).charAt(12);
+    cel2.innerHTML = String(endPoint[i]).charAt(8)+String(endPoint[i]).charAt(9)+String(endPoint[i]).charAt(10)+String(endPoint[i]).charAt(11)+String(endPoint[i]).charAt(12);
+    cel3.innerHTML = i+1;
+  }
+
+  function sw2(){
+    var y = document.getElementById("box");
+    var x = document.getElementById("btn");
+    if (x.innerHTML == "START"){
+      x.innerHTML = "STOP";
+      var click_one = new Date().getTime()/1000;
+      console.log(click_one+" click one")
+      startPoint.push(click_one);
+    }
+    else{
+      x.innerHTML = "START";
+      var click_two = new Date().getTime()/1000;
+      console.log(click_two+" click two")
+      endPoint.push(click_two);
+      alert(Math.ceil((endPoint[i] - startPoint[i])*10)/10);
+      buildTabl();
+        if ((Math.ceil((endPoint[i] - startPoint[i])*10)/10)>4.5 || (Math.ceil((endPoint[i] - startPoint[i])*100)/100)<3.5){
+          y.style.backgroundColor="red";
+          console.log("red")
+        }
+        else if ((Math.ceil((endPoint[i] - startPoint[i])*10)/10)>4.2 || (Math.ceil((endPoint[i] - startPoint[i])*100)/100)<3.8){
+          y.style.backgroundColor="yellow";
+          console.log("yellow")
+        }
+        else if ((Math.ceil((endPoint[i] - startPoint[i])*10)/10)<4.2 || (Math.ceil((endPoint[i] - startPoint[i])*100)/100)>3.8){
+          y.style.backgroundColor="blue";
+          console.log("blue")
+        }
+        else{
+          y.style.backgroundColor="green";
+          console.log("green")
+        }
+      i++;
+    }
+  }
+
+</script>
+</html>
